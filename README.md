@@ -32,6 +32,11 @@ This database type models data as key-value pairs. Each key is unique and is ass
 database is especially efficient at retrieving data, but is not capable of handling relationships between key-value 
 pairs.
 
+#### Time series databases
+This database type models data as time-value pairs. Each value is associated with a timestamp, meaning that this
+database type is optimized for measuring change over time. This database is ideal for storage of events, measurements,
+clicks, trades and the like. 
+
 #### Graph databases
 This database type models data as graphs. Social media is a great example, as one user can be connected to other users, 
 which each have their own befriended users. This type of database is especially effective at representing relationships, 
@@ -54,6 +59,7 @@ relational databases.
    3. Redis
    4. Neo4j
    5. Cassandra
+   6. InfluxDB
 
 ## Decision tree
 ```mermaid
@@ -65,7 +71,9 @@ graph TD
     SQL --> C1{Question B}
     C1 --> |Yes| D1[Leaf 1]
     C1 --> |No| D2[Leaf 2]
-
+   
+    click D1 href "#References"
+   
     NoSQL --> C2{Question C}
     C2 --> |Yes| D3[Leaf 1]
     C2 --> |No| D4[Leaf 2]
@@ -78,4 +86,5 @@ graph TD
 ### Sources
 - [Types of SQL databases](https://www.altexsoft.com/blog/business/comparing-database-management-systems-mysql-postgresql-mssql-server-mongodb-elasticsearch-and-others/)
 - [Types of NoSQL databases](https://www.mongodb.com/scale/types-of-nosql-databases)
+- [Time series databases](https://www.influxdata.com/time-series-database/)
 - [SQL vs NoSQL](https://www.keboola.com/blog/relational-vs-non-relational-database-when-to-use-one-instead-of-the-other)
