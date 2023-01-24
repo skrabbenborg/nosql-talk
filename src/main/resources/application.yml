@@ -1,0 +1,5 @@
+influx-db:
+  url: http://localhost:8086/
+  username: username
+  password: password
+  database: database
