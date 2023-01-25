@@ -1,7 +1,7 @@
 version: "3.6"
 
 services:
-  influx-db:
+  influxdb:
     image: influxdb:1.8.10
     ports:
       - "8086:8086"
@@ -12,3 +12,11 @@ services:
       - DOCKER_INFLUXDB_INIT_ORG=org
       - DOCKER_INFLUXDB_INIT_BUCKET=database
       - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=admin
+
+  mongodb:
+    image: mongo:6.0.3
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=username
+      - MONGO_INITDB_ROOT_PASSWORD=password

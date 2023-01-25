@@ -1,5 +1,11 @@
-influx-db:
+influxdb:
   url: http://localhost:8086/
+  username: username
+  password: password
+  database: database
+
+mongodb:
+  url: localhost:27017
   username: username
   password: password
   database: database
