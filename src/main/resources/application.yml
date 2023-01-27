@@ -9,3 +9,8 @@ mongodb:
   username: username
   password: password
   database: database
+
+neo4j:
+  url: bolt://localhost:7687/
+  username: neo4j
+  password: password

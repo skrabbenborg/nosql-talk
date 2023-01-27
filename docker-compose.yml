@@ -20,3 +20,12 @@ services:
     environment:
       - MONGO_INITDB_ROOT_USERNAME=username
       - MONGO_INITDB_ROOT_PASSWORD=password
+
+  neo4j:
+    image: neo4j:5.3.0
+    ports:
+      - '7474:7474' # https
+      - '7473:7473' # http
+      - '7687:7687' # bolt
+    environment:
+      - NEO4J_AUTH=neo4j/password

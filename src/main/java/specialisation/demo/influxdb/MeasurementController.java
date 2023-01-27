@@ -17,21 +17,21 @@ public class MeasurementController {
         this.influxDb = influxDb;
     }
 
-    @PostMapping()
+    @PostMapping
     ResponseEntity<MeasurementEntity> createMeasurements(
         @RequestBody MeasurementRequest request
     ) {
         return ResponseEntity.ok(influxDb.store(request));
     }
 
-    @GetMapping()
+    @GetMapping
     ResponseEntity<List<MeasurementEntity>> retrieveMeasurements(
         @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDate date
     ) {
         return ResponseEntity.ok(influxDb.fetch(date));
     }
 
-    @DeleteMapping()
+    @DeleteMapping
     ResponseEntity<Void> deleteMeasurements(
         @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDate date
     ) {

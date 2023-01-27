@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 @RequestMapping("/invoice")
@@ -17,22 +18,22 @@ public class InvoiceController {
         this.repository = repository;
     }
 
-    @PostMapping()
+    @PostMapping
     ResponseEntity<InvoiceEntity> createMeasurements(
         @RequestBody InvoiceRequest request
     ) {
         return ResponseEntity.ok(repository.store(request));
     }
 
-    @GetMapping()
-    ResponseEntity<Iterable<InvoiceEntity>> retrieveMeasurements(
+    @GetMapping
+    ResponseEntity<List<InvoiceEntity>> retrieveMeasurements(
         @RequestParam String name,
         @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDate date
     ) {
         return ResponseEntity.ok(repository.fetch(name, date));
     }
 
-    @DeleteMapping()
+    @DeleteMapping
     ResponseEntity<Void> deleteMeasurements(
         @RequestParam UUID id
     ) {

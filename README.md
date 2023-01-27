@@ -7,6 +7,7 @@ set.
 2. Non-relational
    * Document stores
    * Key-value stores
+   * Time series database
    * Graph database
    * Wide-colum stores
 
