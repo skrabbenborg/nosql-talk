@@ -3,19 +3,23 @@ influxdb:
   username: username
   password: password
   database: database
+  enabled: true
 
 mongodb:
   url: localhost:27017
   username: username
   password: password
   database: database
+  enabled: true
 
 neo4j:
   url: bolt://localhost:7687/
   username: neo4j
   password: password
+  enabled: true
 
 redis:
   url: http://localhost:6379
   username: default
   password: password
+  enabled: true

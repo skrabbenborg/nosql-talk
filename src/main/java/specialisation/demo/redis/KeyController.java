@@ -1,10 +1,13 @@
 package specialisation.demo.redis;
 
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import specialisation.demo.redis.config.RedisConfig;
 
-@RequestMapping("/keys")
 @RestController
+@RequestMapping("/keys")
+@ConditionalOnBean(RedisConfig.class)
 public class KeyController {
 
     private final KeyRepository repository;

@@ -1,9 +1,9 @@
-package specialisation.demo.neo4j;
+package specialisation.demo.redis.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-@ConfigurationProperties(prefix = "neo4j")
-record Neo4jProperties(
+@ConfigurationProperties(prefix = "redis")
+record RedisProperties(
     String url,
     String username,
     String password

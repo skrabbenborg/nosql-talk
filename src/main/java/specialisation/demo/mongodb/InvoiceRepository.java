@@ -4,7 +4,9 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.conversions.Bson;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.stereotype.Service;
+import specialisation.demo.mongodb.config.MongoDbConfig;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -16,6 +18,7 @@ import static com.mongodb.client.model.Filters.eq;
 
 @Slf4j
 @Service
+@ConditionalOnBean(MongoDbConfig.class)
 public class InvoiceRepository {
 
     private final MongoCollection<InvoiceEntity> collection;

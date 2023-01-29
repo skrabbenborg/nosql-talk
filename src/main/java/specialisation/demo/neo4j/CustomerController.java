@@ -1,12 +1,15 @@
 package specialisation.demo.neo4j;
 
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import specialisation.demo.neo4j.config.Neo4jConfig;
 
 import java.util.List;
 
-@RequestMapping("/network")
 @RestController
+@RequestMapping("/network")
+@ConditionalOnBean(Neo4jConfig.class)
 public class CustomerController {
 
     private final CustomerRepository repository;

@@ -1,5 +1,6 @@
-package specialisation.demo.redis;
+package specialisation.demo.redis.config;
 
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import redis.clients.jedis.Jedis;
@@ -7,6 +8,7 @@ import redis.clients.jedis.Jedis;
 import java.net.URI;
 
 @Configuration
+@ConditionalOnProperty(value = "redis.enabled", havingValue = "true")
 public class RedisConfig {
 
     private final RedisProperties properties;

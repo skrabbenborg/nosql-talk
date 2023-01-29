@@ -1,12 +1,14 @@
-package specialisation.demo.influxdb;
+package specialisation.demo.influxdb.config;
 
 import org.influxdb.InfluxDB;
 import org.influxdb.InfluxDBFactory;
 import org.influxdb.impl.InfluxDBMapper;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
+@ConditionalOnProperty(value = "influxdb.enabled", havingValue = "true")
 public class InfluxDbConfig {
 
     private final InfluxDbProperties properties;

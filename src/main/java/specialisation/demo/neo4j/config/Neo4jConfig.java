@@ -1,10 +1,12 @@
-package specialisation.demo.neo4j;
+package specialisation.demo.neo4j.config;
 
-import org.neo4j.ogm.config.Configuration;
 import org.neo4j.ogm.session.SessionFactory;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
-@org.springframework.context.annotation.Configuration
+@Configuration
+@ConditionalOnProperty(value = "neo4j.enabled", havingValue = "true")
 public class Neo4jConfig {
 
     private final Neo4jProperties properties;
@@ -16,7 +18,7 @@ public class Neo4jConfig {
     @Bean
     SessionFactory neo4jClient() {
 
-        Configuration configuration = new Configuration.Builder()
+        var configuration = new org.neo4j.ogm.config.Configuration.Builder()
             .uri(properties.url())
             .credentials(properties.username(), properties.password())
             .build();

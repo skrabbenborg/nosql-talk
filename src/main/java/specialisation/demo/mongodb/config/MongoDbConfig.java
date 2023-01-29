@@ -1,4 +1,4 @@
-package specialisation.demo.mongodb;
+package specialisation.demo.mongodb.config;
 
 import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
@@ -7,13 +7,14 @@ import com.mongodb.client.MongoDatabase;
 import org.bson.codecs.configuration.CodecRegistries;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
-import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
 
 @Configuration
+@ConditionalOnProperty(value = "mongodb.enabled", havingValue = "true")
 public class MongoDbConfig {
 
     private final MongoDbProperties properties;
@@ -28,8 +29,10 @@ public class MongoDbConfig {
 
         ConnectionString connection = new ConnectionString(url);
 
-        CodecRegistry codecRegistry = fromRegistries(MongoClientSettings.getDefaultCodecRegistry(),
-            fromProviders(PojoCodecProvider.builder().automatic(true).build()));
+        CodecRegistry codecRegistry = CodecRegistries.fromRegistries(
+            MongoClientSettings.getDefaultCodecRegistry(),
+            fromProviders(PojoCodecProvider.builder().automatic(true).build())
+        );
 
         MongoClientSettings settings = MongoClientSettings.builder()
             .applyConnectionString(connection)
@@ -37,6 +40,7 @@ public class MongoDbConfig {
             .build();
 
         try {
+            // TODO try-with-resources closes on return statement. Does spring manage our connection?
             return MongoClients.create(settings).getDatabase(properties.database());
         } catch (Exception e) {
             throw new IllegalStateException("Could not start application due to MongoDb startup failure", e);

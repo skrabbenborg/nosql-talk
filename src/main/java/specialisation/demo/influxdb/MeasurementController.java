@@ -1,14 +1,17 @@
 package specialisation.demo.influxdb;
 
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import specialisation.demo.influxdb.config.InfluxDbConfig;
 
 import java.time.LocalDate;
 import java.util.List;
 
-@RequestMapping("/measurements")
 @RestController
+@RequestMapping("/measurements")
+@ConditionalOnBean(InfluxDbConfig.class)
 public class MeasurementController {
 
     private final MeasurementRepository influxDb;

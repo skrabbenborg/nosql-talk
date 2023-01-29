@@ -4,7 +4,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.influxdb.dto.BoundParameterQuery.QueryBuilder;
 import org.influxdb.dto.Query;
 import org.influxdb.impl.InfluxDBMapper;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.stereotype.Service;
+import specialisation.demo.influxdb.config.InfluxDbConfig;
 
 import java.time.Clock;
 import java.time.Instant;
@@ -15,6 +17,7 @@ import java.util.List;
 
 @Slf4j
 @Service
+@ConditionalOnBean(InfluxDbConfig.class)
 public class MeasurementRepository {
 
     private final Clock clock;

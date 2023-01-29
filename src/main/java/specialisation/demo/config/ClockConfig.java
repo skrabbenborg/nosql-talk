@@ -1,4 +1,4 @@
-package specialisation.demo.general;
+package specialisation.demo.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

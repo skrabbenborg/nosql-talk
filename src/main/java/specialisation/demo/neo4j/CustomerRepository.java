@@ -1,12 +1,12 @@
 package specialisation.demo.neo4j;
 
 import lombok.extern.slf4j.Slf4j;
-import org.neo4j.ogm.cypher.BooleanOperator;
-import org.neo4j.ogm.cypher.ComparisonOperator;
 import org.neo4j.ogm.cypher.Filter;
 import org.neo4j.ogm.cypher.Filters;
 import org.neo4j.ogm.session.SessionFactory;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.stereotype.Service;
+import specialisation.demo.neo4j.config.Neo4jConfig;
 
 import java.util.HashMap;
 import java.util.List;
@@ -16,6 +16,7 @@ import static org.neo4j.ogm.cypher.ComparisonOperator.EQUALS;
 
 @Slf4j
 @Service
+@ConditionalOnBean(Neo4jConfig.class)
 public class CustomerRepository {
 
     private final SessionFactory neo4j;
@@ -62,6 +63,7 @@ public class CustomerRepository {
         return relation;
     }
 
+    // TODO query can likely be rewritten using Filters
     public void deleteCustomer(Long id) {
         String query = "MATCH (customer:CustomerEntity) WHERE id(customer) = $id DETACH DELETE customer";
 
@@ -71,6 +73,7 @@ public class CustomerRepository {
         neo4j.openSession().query(query, parameters);
     }
 
+    // TODO query can likely be rewritten using Filters
     private CustomerEntity fetch(Long id) {
         String query = "MATCH (customer:CustomerEntity) WHERE id(customer) = $id RETURN customer";
 

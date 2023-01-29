@@ -1,4 +1,4 @@
-package specialisation.demo.general;
+package specialisation.demo.config;
 
 import org.springdoc.core.models.GroupedOpenApi;
 import org.springframework.context.annotation.Bean;
