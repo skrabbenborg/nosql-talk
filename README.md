@@ -10,6 +10,7 @@ set.
    * Time series database
    * Graph database
    * Wide-colum stores
+   * Search Engine database
 
 ### Relational databases
 Relational databases are ideal for storage of structured data. Data is stored as row records in tables and can be 
