@@ -20,12 +20,12 @@ public class CustomerEntity {
     @GeneratedValue
     Long id;
 
-    @Property(name="firstName")
+    @Property(name = "firstName")
     String firstName;
 
-    @Property(name="lastName")
+    @Property(name = "lastName")
     String lastName;
 
-    @Property(name="age")
+    @Property(name = "age")
     Integer age;
 }

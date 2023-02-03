@@ -25,14 +25,6 @@ public class CustomerRepository {
         this.neo4j = neo4j;
     }
 
-    public List<CustomerEntity> fetch(String firstName, String lastName) {
-        Filter firstNameFilter = new Filter("firstName", EQUALS, firstName);
-        Filter lastNameFilter = new Filter("lastName", EQUALS, lastName);
-        Filters filters = new Filters(firstNameFilter).and(lastNameFilter);
-
-        return List.copyOf(neo4j.openSession().loadAll(CustomerEntity.class, filters));
-    }
-
     public CustomerEntity store(CustomerRequest request) {
         CustomerEntity entity = CustomerEntity.builder()
             .firstName(request.firstName())
@@ -61,6 +53,14 @@ public class CustomerRepository {
         log.info("Stored {}", relation);
 
         return relation;
+    }
+
+    public List<CustomerEntity> fetch(String firstName, String lastName) {
+        Filter firstNameFilter = new Filter("firstName", EQUALS, firstName);
+        Filter lastNameFilter = new Filter("lastName", EQUALS, lastName);
+        Filters filters = new Filters(firstNameFilter).and(lastNameFilter);
+
+        return List.copyOf(neo4j.openSession().loadAll(CustomerEntity.class, filters));
     }
 
     // TODO query can likely be rewritten using Filters

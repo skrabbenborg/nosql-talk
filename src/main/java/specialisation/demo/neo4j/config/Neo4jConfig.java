@@ -2,10 +2,13 @@ package specialisation.demo.neo4j.config;
 
 import org.neo4j.ogm.session.SessionFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import specialisation.demo.cassandra.config.CassandraProperties;
 
 @Configuration
+@EnableConfigurationProperties(Neo4jProperties.class)
 @ConditionalOnProperty(value = "neo4j.enabled", havingValue = "true")
 public class Neo4jConfig {
 

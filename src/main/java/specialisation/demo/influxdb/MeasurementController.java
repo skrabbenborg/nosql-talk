@@ -14,31 +14,31 @@ import java.util.List;
 @ConditionalOnBean(InfluxDbConfig.class)
 public class MeasurementController {
 
-    private final MeasurementRepository influxDb;
+    private final MeasurementRepository repository;
 
-    public MeasurementController(MeasurementRepository influxDb) {
-        this.influxDb = influxDb;
+    public MeasurementController(MeasurementRepository repository) {
+        this.repository = repository;
     }
 
     @PostMapping
     ResponseEntity<MeasurementEntity> createMeasurements(
         @RequestBody MeasurementRequest request
     ) {
-        return ResponseEntity.ok(influxDb.store(request));
+        return ResponseEntity.ok(repository.store(request));
     }
 
     @GetMapping
     ResponseEntity<List<MeasurementEntity>> retrieveMeasurements(
         @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDate date
     ) {
-        return ResponseEntity.ok(influxDb.fetch(date));
+        return ResponseEntity.ok(repository.fetch(date));
     }
 
     @DeleteMapping
     ResponseEntity<Void> deleteMeasurements(
         @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDate date
     ) {
-        influxDb.delete(date);
+        repository.delete(date);
         return ResponseEntity.ok().build();
     }
 }

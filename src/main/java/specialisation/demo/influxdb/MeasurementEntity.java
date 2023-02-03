@@ -1,6 +1,9 @@
 package specialisation.demo.influxdb;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.influxdb.annotation.Column;
 import org.influxdb.annotation.Measurement;
 
