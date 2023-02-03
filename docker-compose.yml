@@ -1,6 +1,13 @@
 version: "3.6"
 
 services:
+  cassandra:
+    image: cassandra:4.0
+    ports:
+      - "9042:9042"
+    environment:
+      - CASSANDRA_CLUSTER_NAME=cloudinfra
+
   influxdb:
     image: influxdb:1.8.10
     ports:

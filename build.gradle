@@ -20,6 +20,11 @@ dependencies {
     compileOnly 'org.projectlombok:lombok:1.18.24'
     annotationProcessor 'org.projectlombok:lombok:1.18.24'
 
+    // Cassandra
+    implementation 'com.datastax.oss:java-driver-core:4.15.0'
+    implementation 'com.datastax.oss:java-driver-mapper-runtime:4.15.0'
+    annotationProcessor 'com.datastax.oss:java-driver-mapper-processor:4.15.0'
+
     // InfluxDB
     implementation 'org.influxdb:influxdb-java:2.23'
 

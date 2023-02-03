@@ -1,3 +1,10 @@
+cassandra:
+  data-center: datacenter1
+  node: localhost
+  port: 9042
+  keyspace: flights
+  enabled: true
+
 influxdb:
   url: http://localhost:8086/
   username: username
