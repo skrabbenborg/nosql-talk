@@ -8,6 +8,17 @@ services:
     environment:
       - CASSANDRA_CLUSTER_NAME=cloudinfra
 
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.6.1
+    ports:
+      - "9200:9200"
+    environment:
+      - ES_JAVA_OPTS=-Xms256m -Xmx256m
+      - "transport.host=127.0.0.1"
+      - "http.host=0.0.0.0"
+      - "xpack.security.enabled=false"
+      - "discovery.type=single-node"
+
   influxdb:
     image: influxdb:1.8.10
     ports:

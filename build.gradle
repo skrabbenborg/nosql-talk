@@ -25,6 +25,9 @@ dependencies {
     implementation 'com.datastax.oss:java-driver-mapper-runtime:4.15.0'
     annotationProcessor 'com.datastax.oss:java-driver-mapper-processor:4.15.0'
 
+    // Elastic
+    implementation 'co.elastic.clients:elasticsearch-java:8.6.1'
+
     // InfluxDB
     implementation 'org.influxdb:influxdb-java:2.23'
 

@@ -5,6 +5,12 @@ cassandra:
   keyspace: flights
   enabled: true
 
+elastic:
+  url: http://localhost:9200/
+  username: elastic
+  password: password
+  enabled: true
+
 influxdb:
   url: http://localhost:8086/
   username: username
