@@ -13,23 +13,23 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/measurements")
+@RequestMapping("/prognosis")
 @ConditionalOnBean(InfluxDbConfig.class)
-public class MeasurementController {
+public class PrognosisController {
 
-    private final InfluxDbRepository<MeasurementEntity> repository;
+    private final InfluxDbRepository<PrognosisEntity> repository;
     private final Clock clock;
 
-    public MeasurementController(InfluxDbRepository<MeasurementEntity> repository, Clock clock) {
+    public PrognosisController(InfluxDbRepository<PrognosisEntity> repository, Clock clock) {
         this.repository = repository;
         this.clock = clock;
     }
 
     @PostMapping
-    ResponseEntity<MeasurementEntity> createMeasurements(
-        @RequestBody MeasurementRequest request
+    ResponseEntity<PrognosisEntity> createPrognosis(
+        @RequestBody PrognosisRequest request
     ) {
-        var entity = MeasurementEntity.builder()
+        var entity = PrognosisEntity.builder()
             .time(Instant.now(clock))
             .chalet(request.chalet())
             .temp(request.temp())
@@ -39,7 +39,7 @@ public class MeasurementController {
     }
 
     @GetMapping
-    ResponseEntity<List<MeasurementEntity>> retrieveMeasurements(
+    ResponseEntity<List<PrognosisEntity>> retrievePrognosis(
         @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Optional<OffsetDateTime> start,
         @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Optional<OffsetDateTime> end
     ) {
@@ -50,7 +50,7 @@ public class MeasurementController {
     }
 
     @DeleteMapping
-    ResponseEntity<Void> deleteMeasurements(
+    ResponseEntity<Void> deletePrognosis(
         @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) OffsetDateTime start,
         @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) OffsetDateTime end
     ) {

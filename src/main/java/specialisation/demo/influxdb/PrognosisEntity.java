@@ -9,14 +9,14 @@ import lombok.NoArgsConstructor;
 
 import java.time.Instant;
 
-import static specialisation.demo.influxdb.InfluxDbTypes.MEASURED;
+import static specialisation.demo.influxdb.InfluxDbTypes.PROGNOSED;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Measurement(name = MEASURED)
-public class MeasurementEntity {
+@Measurement(name = PROGNOSED)
+public class PrognosisEntity {
     @Column(timestamp = true)
     Instant time;
     @Column(tag = true)
@@ -24,3 +24,4 @@ public class MeasurementEntity {
     @Column
     Integer temp;
 }
+

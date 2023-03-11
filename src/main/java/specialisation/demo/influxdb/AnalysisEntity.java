@@ -16,11 +16,11 @@ import static specialisation.demo.influxdb.InfluxDbTypes.MEASURED;
 @NoArgsConstructor
 @AllArgsConstructor
 @Measurement(name = MEASURED)
-public class MeasurementEntity {
+public class AnalysisEntity {
     @Column(timestamp = true)
     Instant time;
     @Column(tag = true)
     String chalet;
     @Column
-    Integer temp;
+    Integer analysis;
 }

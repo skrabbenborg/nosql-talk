@@ -3,13 +3,13 @@ cassandra:
   node: localhost
   port: 9042
   keyspace: flights
-  enabled: true
+  enabled: false
 
 elastic:
   url: http://localhost:9200/
   username: elastic
   password: password
-  enabled: true
+  enabled: false
 
 influxdb:
   url: http://localhost:8086/
@@ -23,16 +23,16 @@ mongodb:
   username: username
   password: password
   database: database
-  enabled: true
+  enabled: false
 
 neo4j:
   url: bolt://localhost:7687/
   username: neo4j
   password: password
-  enabled: true
+  enabled: false
 
 redis:
   url: http://localhost:6379
   username: default
   password: password
-  enabled: true
+  enabled: false
