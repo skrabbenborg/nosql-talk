@@ -63,15 +63,7 @@ This database type can model data as both structured and unstructured. However, 
 this type is specifically tailored for searching through large volumes of stored data, and returning of result ranked by
 relevance. it is specifically useful for full-text search, log analysis and geolocation searches in i.e. google maps.
 
-## References
+## Sources
 
-### Links
-
-- [Mermaid editor](https://mermaid.live)
-
-### Sources
-
-- [Types of SQL databases](https://www.altexsoft.com/blog/business/comparing-database-management-systems-mysql-postgresql-mssql-server-mongodb-elasticsearch-and-others/)
-- [Types of NoSQL databases](https://www.mongodb.com/scale/types-of-nosql-databases)
-- [Time series databases](https://www.influxdata.com/time-series-database/)
-- [SQL vs NoSQL](https://www.keboola.com/blog/relational-vs-non-relational-database-when-to-use-one-instead-of-the-other)
+- [Influx-DB purpose](https://www.influxdata.com/products/flux/)
+- [Influx-DB key concepts](https://docs.influxdata.com/influxdb/v1.8/concepts/key_concepts/)

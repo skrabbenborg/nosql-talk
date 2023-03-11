@@ -13,9 +13,9 @@ elastic:
 
 influxdb:
   url: http://localhost:8086/
-  username: username
-  password: password
-  database: database
+  token: admin
+  bucket: temperature
+  organisation: org
   enabled: true
 
 mongodb:

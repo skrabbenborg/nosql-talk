@@ -29,7 +29,8 @@ dependencies {
     implementation 'co.elastic.clients:elasticsearch-java:8.6.1'
 
     // InfluxDB
-    implementation 'org.influxdb:influxdb-java:2.23'
+    implementation 'com.influxdb:influxdb-client-java:6.7.0'
+    implementation 'com.influxdb:flux-dsl:6.7.0'
 
     // MongoDB
     implementation 'org.mongodb:mongodb-driver-sync:4.8.2'

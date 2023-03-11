@@ -1,41 +1,43 @@
 package specialisation.demo.influxdb;
 
+import com.influxdb.client.InfluxDBClient;
+import com.influxdb.client.domain.DeletePredicateRequest;
+import com.influxdb.client.domain.WritePrecision;
+import com.influxdb.query.dsl.Flux;
 import lombok.extern.slf4j.Slf4j;
-import org.influxdb.dto.BoundParameterQuery.QueryBuilder;
-import org.influxdb.dto.Query;
-import org.influxdb.impl.InfluxDBMapper;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.stereotype.Service;
 import specialisation.demo.influxdb.config.InfluxDbConfig;
 
-import java.time.Clock;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.ZoneOffset;
+import java.time.*;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
+
+import static com.influxdb.query.dsl.functions.restriction.Restrictions.measurement;
 
 @Slf4j
 @Service
 @ConditionalOnBean(InfluxDbConfig.class)
 public class MeasurementRepository {
 
-    private final Clock clock;
-    private final InfluxDBMapper influxDb;
+    public static final String MEASUREMENT = "measured";
 
-    public MeasurementRepository(Clock clock, InfluxDBMapper influxDb) {
+    private final Clock clock;
+    private final InfluxDBClient influxDb;
+
+    public MeasurementRepository(Clock clock, InfluxDBClient influxDb) {
         this.clock = clock;
         this.influxDb = influxDb;
     }
 
     public MeasurementEntity store(MeasurementRequest request) {
         MeasurementEntity entity = MeasurementEntity.builder()
-            .time(clock.instant())
-            .type(request.chalet())
-            .measurement(request.measurement())
+            .time(Instant.now(clock))
+            .chalet(request.chalet())
+            .temp(request.temp())
             .build();
 
-        influxDb.save(entity);
+        influxDb.getWriteApiBlocking().writeMeasurement(WritePrecision.MS, entity);
         log.info("Stored {}", entity);
 
         return entity;
@@ -45,23 +47,24 @@ public class MeasurementRepository {
         Instant start = date.atStartOfDay().toInstant(ZoneOffset.UTC);
         Instant end = start.plus(1, ChronoUnit.DAYS);
 
-        Query query = QueryBuilder.newQuery("SELECT * FROM temperatures WHERE time > $start AND time < $end")
-            .bind("start", start)
-            .bind("end", end)
-            .create();
+        String query = Flux.from("temperature")
+            .range(start, end)
+            .filter(measurement().equal(MEASUREMENT))
+            .pivot(List.of("_time"), List.of("_field"), "_value")
+            .toString();
 
-        return influxDb.query(query, MeasurementEntity.class);
+        return influxDb.getQueryApi().query(query, MeasurementEntity.class);
     }
 
     public void delete(LocalDate date) {
-        Instant start = date.atStartOfDay().toInstant(ZoneOffset.UTC);
-        Instant end = start.plus(1, ChronoUnit.DAYS);
+        OffsetDateTime start = date.atStartOfDay().atZone(clock.getZone()).toOffsetDateTime();
+        OffsetDateTime end = start.plus(1, ChronoUnit.DAYS);
 
-        Query query = QueryBuilder.newQuery("DELETE FROM temperatures WHERE time > $start AND time < $end")
-            .bind("start", start)
-            .bind("end", end)
-            .create();
+        var predicate = new DeletePredicateRequest()
+            .start(start)
+            .stop(end)
+            .predicate("_measurement=%s".formatted(MEASUREMENT));
 
-        influxDb.query(query, MeasurementEntity.class);
+        influxDb.getDeleteApi().delete(predicate, "temperature", "org");
     }
 }

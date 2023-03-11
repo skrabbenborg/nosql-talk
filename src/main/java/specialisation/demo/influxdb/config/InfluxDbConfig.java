@@ -1,13 +1,13 @@
 package specialisation.demo.influxdb.config;
 
-import org.influxdb.InfluxDB;
-import org.influxdb.InfluxDBFactory;
-import org.influxdb.impl.InfluxDBMapper;
+import com.influxdb.LogLevel;
+import com.influxdb.client.InfluxDBClient;
+import com.influxdb.client.InfluxDBClientFactory;
+import com.influxdb.client.InfluxDBClientOptions;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import specialisation.demo.cassandra.config.CassandraProperties;
 
 @Configuration
 @EnableConfigurationProperties(InfluxDbProperties.class)
@@ -21,20 +21,14 @@ public class InfluxDbConfig {
     }
 
     @Bean
-    InfluxDB influxDb() {
-        try (InfluxDB influxDB = InfluxDBFactory
-            .connect(properties.url(), properties.url(), properties.password())
-            .setDatabase(properties.database())
-            .enableBatch()
-        ) {
-            return influxDB;
-        } catch (Exception e) {
-            throw new IllegalStateException("Could not start application due to InfluxDB startup failure", e);
-        }
-    }
+    InfluxDBClient influxDb() {
+        var options = new InfluxDBClientOptions.Builder()
+            .url(properties.url())
+            .authenticateToken(properties.token().toCharArray())
+            .bucket(properties.bucket())
+            .org(properties.organisation())
+            .build();
 
-    @Bean
-    InfluxDBMapper influxDbMapper(InfluxDB influxDB) {
-        return new InfluxDBMapper(influxDB);
+        return InfluxDBClientFactory.create(options).setLogLevel(LogLevel.BODY);
     }
 }

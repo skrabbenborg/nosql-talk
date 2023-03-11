@@ -20,7 +20,7 @@ services:
       - "discovery.type=single-node"
 
   influxdb:
-    image: influxdb:1.8.10
+    image: influxdb:2.6
     ports:
       - "8086:8086"
     environment:
@@ -28,7 +28,7 @@ services:
       - DOCKER_INFLUXDB_INIT_USERNAME=username
       - DOCKER_INFLUXDB_INIT_PASSWORD=password
       - DOCKER_INFLUXDB_INIT_ORG=org
-      - DOCKER_INFLUXDB_INIT_BUCKET=database
+      - DOCKER_INFLUXDB_INIT_BUCKET=temperature
       - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=admin
 
   mongodb:

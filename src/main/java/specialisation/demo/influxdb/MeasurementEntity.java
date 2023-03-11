@@ -1,11 +1,11 @@
 package specialisation.demo.influxdb;
 
+import com.influxdb.annotations.Column;
+import com.influxdb.annotations.Measurement;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.influxdb.annotation.Column;
-import org.influxdb.annotation.Measurement;
 
 import java.time.Instant;
 
@@ -13,12 +13,12 @@ import java.time.Instant;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Measurement(name = "temperatures", database = "database")
+@Measurement(name = "measured")
 public class MeasurementEntity {
-    @Column(name = "time")
+    @Column(timestamp = true)
     Instant time;
-    @Column(name = "type", tag = true)
-    String type;
-    @Column(name = "measurement")
-    Long measurement;
+    @Column(tag = true)
+    String chalet;
+    @Column
+    Integer temp;
 }

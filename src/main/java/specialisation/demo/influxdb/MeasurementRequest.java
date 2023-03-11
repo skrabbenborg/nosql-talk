@@ -1,7 +1,7 @@
 package specialisation.demo.influxdb;
 
 record MeasurementRequest(
-    Long measurement,
+    Integer temp,
     String chalet
 ) {
 }
