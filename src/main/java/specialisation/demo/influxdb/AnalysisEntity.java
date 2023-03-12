@@ -22,5 +22,5 @@ public class AnalysisEntity {
     @Column(tag = true)
     String chalet;
     @Column
-    Integer analysis;
+    Float analysis;
 }
