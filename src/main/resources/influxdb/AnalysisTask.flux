@@ -12,11 +12,9 @@ prognosed = from(bucket: "temperature")
   |> filter(fn: (r) => r["_field"] == "temp")
   |> mean()
 
-previousMinuteRounded = date.sub(d: 1m, from: date.truncate(t: now(), unit: 1m))
-
 join(tables: {m:measured, p:prognosed}, on: ["chalet"])
   |> map(fn: (r) => ({
-      _time: previousMinuteRounded,
+      _time: date.sub(d: 1m, from: now()),
       _measurement: "analysis",
       _field: "analysis",
       _value: r["_value_p"] / r["_value_m"],
