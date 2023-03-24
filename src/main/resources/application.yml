@@ -9,14 +9,14 @@ elastic:
   url: http://localhost:9200/
   username: elastic
   password: password
-  enabled: false
+  enabled: true
 
 influxdb:
   url: http://localhost:8086/
   token: admin
   bucket: temperature
   organisation: org
-  enabled: true
+  enabled: false
 
 mongodb:
   url: localhost:27017

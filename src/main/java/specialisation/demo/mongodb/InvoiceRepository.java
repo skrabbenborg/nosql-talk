@@ -49,9 +49,7 @@ public class InvoiceRepository {
         );
 
         var result = new ArrayList<InvoiceEntity>();
-
         collection.find(query).into(result);
-
         return result;
     }
 
