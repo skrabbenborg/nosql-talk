@@ -14,7 +14,7 @@ import org.neo4j.ogm.annotation.Property;
 @AllArgsConstructor
 @NoArgsConstructor
 @NodeEntity
-public class CustomerEntity {
+public class User {
 
     @Id
     @GeneratedValue

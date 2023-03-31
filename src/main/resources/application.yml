@@ -9,7 +9,7 @@ elastic:
   url: http://localhost:9200/
   username: elastic
   password: password
-  enabled: true
+  enabled: false
 
 influxdb:
   url: http://localhost:8086/
@@ -29,7 +29,7 @@ neo4j:
   url: bolt://localhost:7687/
   username: neo4j
   password: password
-  enabled: false
+  enabled: true
 
 redis:
   url: http://localhost:6379

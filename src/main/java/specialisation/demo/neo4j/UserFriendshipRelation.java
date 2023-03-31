@@ -11,15 +11,15 @@ import org.neo4j.ogm.annotation.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @RelationshipEntity(type = "FRIENDSHIP")
-public class FriendshipRelation {
+public class UserFriendshipRelation {
 
     @Id
     @GeneratedValue
     Long relationshipId;
 
     @StartNode
-    CustomerEntity customerOne;
+    User userOne;
 
     @EndNode
-    CustomerEntity customerTwo;
+    User userTwo;
 }

@@ -1,6 +1,6 @@
 package specialisation.demo.neo4j;
 
-record CustomerRequest(
+record UserRequest(
     String firstName,
     String lastName,
     Integer age
