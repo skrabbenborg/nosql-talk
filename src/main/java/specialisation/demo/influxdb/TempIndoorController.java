@@ -13,25 +13,25 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/measurements")
+@RequestMapping("/temp/indoor")
 @ConditionalOnBean(InfluxDbConfig.class)
-public class MeasurementController {
+public class TempIndoorController {
 
-    private final InfluxDbRepository<MeasurementEntity> repository;
+    private final InfluxDbRepository<TempIndoorEntity> repository;
     private final Clock clock;
 
-    public MeasurementController(InfluxDbRepository<MeasurementEntity> repository, Clock clock) {
+    public TempIndoorController(InfluxDbRepository<TempIndoorEntity> repository, Clock clock) {
         this.repository = repository;
         this.clock = clock;
     }
 
     @PostMapping
-    ResponseEntity<MeasurementEntity> createMeasurements(
-        @RequestBody MeasurementRequest request
+    ResponseEntity<TempIndoorEntity> createMeasurements(
+        @RequestBody TempIndoorRequest request
     ) {
-        var entity = MeasurementEntity.builder()
+        var entity = TempIndoorEntity.builder()
             .time(Instant.now(clock))
-            .chalet(request.chalet())
+            .address(request.chalet())
             .temp(request.temp())
             .build();
 
@@ -39,7 +39,7 @@ public class MeasurementController {
     }
 
     @GetMapping
-    ResponseEntity<List<MeasurementEntity>> retrieveMeasurements(
+    ResponseEntity<List<TempIndoorEntity>> retrieveMeasurements(
         @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Optional<OffsetDateTime> start,
         @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Optional<OffsetDateTime> end
     ) {

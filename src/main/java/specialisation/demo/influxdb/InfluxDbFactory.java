@@ -4,12 +4,13 @@ import com.influxdb.client.InfluxDBClient;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import specialisation.demo.influxdb.config.InfluxDbConfig;
 import specialisation.demo.influxdb.config.InfluxDbProperties;
 
 import static specialisation.demo.influxdb.InfluxDbTypes.*;
 
 @Configuration
-@ConditionalOnBean(InfluxDBClient.class)
+@ConditionalOnBean(InfluxDbConfig.class)
 public class InfluxDbFactory {
 
     private final InfluxDbProperties properties;
@@ -19,17 +20,17 @@ public class InfluxDbFactory {
     }
 
     @Bean
-    InfluxDbRepository<MeasurementEntity> measurementRepository(InfluxDBClient influxDb) {
-        return new InfluxDbRepository<>(properties.organisation(), properties.bucket(), MEASURED, MeasurementEntity.class, influxDb);
+    InfluxDbRepository<TempIndoorEntity> tempIndoorRepository(InfluxDBClient influxDb) {
+        return new InfluxDbRepository<>(properties.organisation(), properties.bucket(), INDOOR, TempIndoorEntity.class, influxDb);
     }
 
     @Bean
-    InfluxDbRepository<PrognosisEntity> prognosisRepository(InfluxDBClient influxDb) {
-        return new InfluxDbRepository<>(properties.organisation(), properties.bucket(), PROGNOSED, PrognosisEntity.class, influxDb);
+    InfluxDbRepository<TempOutdoorEntity> tempOutdoorRepository(InfluxDBClient influxDb) {
+        return new InfluxDbRepository<>(properties.organisation(), properties.bucket(), OUTDOOR, TempOutdoorEntity.class, influxDb);
     }
 
     @Bean
-    InfluxDbRepository<AnalysisEntity> analysisRepository(InfluxDBClient influxDb) {
-        return new InfluxDbRepository<>(properties.organisation(), properties.bucket(), ANALYSIS, AnalysisEntity.class, influxDb);
+    InfluxDbRepository<TempAnalysisEntity> tempAnalysisRepository(InfluxDBClient influxDb) {
+        return new InfluxDbRepository<>(properties.organisation(), properties.bucket(), ANALYSIS, TempAnalysisEntity.class, influxDb);
     }
 }

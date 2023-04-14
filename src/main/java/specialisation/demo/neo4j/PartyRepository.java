@@ -1,11 +1,14 @@
 package specialisation.demo.neo4j;
 
 import org.neo4j.ogm.session.SessionFactory;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.stereotype.Service;
+import specialisation.demo.neo4j.config.Neo4jConfig;
 
 import java.util.Optional;
 
 @Service
+@ConditionalOnBean(Neo4jConfig.class)
 public class PartyRepository {
 
     private final UserRepository userRepository;

@@ -1,13 +1,16 @@
 package specialisation.demo.neo4j;
 
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import specialisation.demo.neo4j.config.Neo4jConfig;
 
 @RestController
 @RequestMapping("/social/party")
+@ConditionalOnBean(Neo4jConfig.class)
 public class PartyController {
 
     private final PartyRepository repository;

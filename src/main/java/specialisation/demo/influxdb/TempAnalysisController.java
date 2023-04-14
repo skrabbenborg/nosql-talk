@@ -15,20 +15,20 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/analysis")
+@RequestMapping("/temp/analysis")
 @ConditionalOnBean(InfluxDbConfig.class)
-public class AnalysisController {
+public class TempAnalysisController {
 
-    private final InfluxDbRepository<AnalysisEntity> repository;
+    private final InfluxDbRepository<TempAnalysisEntity> repository;
     private final Clock clock;
 
-    public AnalysisController(InfluxDbRepository<AnalysisEntity> repository, Clock clock) {
+    public TempAnalysisController(InfluxDbRepository<TempAnalysisEntity> repository, Clock clock) {
         this.repository = repository;
         this.clock = clock;
     }
 
     @GetMapping
-    ResponseEntity<List<AnalysisEntity>> retrieveMeasurements(
+    ResponseEntity<List<TempAnalysisEntity>> retrieveAnalysis(
         @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Optional<OffsetDateTime> start,
         @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Optional<OffsetDateTime> end
     ) {

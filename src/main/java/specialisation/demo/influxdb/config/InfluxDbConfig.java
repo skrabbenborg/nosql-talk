@@ -27,7 +27,7 @@ public class InfluxDbConfig {
             .authenticateToken(properties.token().toCharArray())
             .bucket(properties.bucket())
             .org(properties.organisation())
-            .logLevel(LogLevel.BODY)
+//            .logLevel(LogLevel.BODY)
             .build();
 
         return InfluxDBClientFactory.create(options);

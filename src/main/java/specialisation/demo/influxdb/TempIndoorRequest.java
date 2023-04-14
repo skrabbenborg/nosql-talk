@@ -1,6 +1,6 @@
 package specialisation.demo.influxdb;
 
-record MeasurementRequest(
+record TempIndoorRequest(
     Integer temp,
     String chalet
 ) {

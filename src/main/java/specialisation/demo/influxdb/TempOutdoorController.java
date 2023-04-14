@@ -13,25 +13,25 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/prognosis")
+@RequestMapping("/temp/outdoor")
 @ConditionalOnBean(InfluxDbConfig.class)
-public class PrognosisController {
+public class TempOutdoorController {
 
-    private final InfluxDbRepository<PrognosisEntity> repository;
+    private final InfluxDbRepository<TempOutdoorEntity> repository;
     private final Clock clock;
 
-    public PrognosisController(InfluxDbRepository<PrognosisEntity> repository, Clock clock) {
+    public TempOutdoorController(InfluxDbRepository<TempOutdoorEntity> repository, Clock clock) {
         this.repository = repository;
         this.clock = clock;
     }
 
     @PostMapping
-    ResponseEntity<PrognosisEntity> createPrognosis(
-        @RequestBody PrognosisRequest request
+    ResponseEntity<TempOutdoorEntity> createPrognosis(
+        @RequestBody TempOutdoorRequest request
     ) {
-        var entity = PrognosisEntity.builder()
+        var entity = TempOutdoorEntity.builder()
             .time(Instant.now(clock))
-            .chalet(request.chalet())
+            .address(request.chalet())
             .temp(request.temp())
             .build();
 
@@ -39,7 +39,7 @@ public class PrognosisController {
     }
 
     @GetMapping
-    ResponseEntity<List<PrognosisEntity>> retrievePrognosis(
+    ResponseEntity<List<TempOutdoorEntity>> retrievePrognosis(
         @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Optional<OffsetDateTime> start,
         @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Optional<OffsetDateTime> end
     ) {

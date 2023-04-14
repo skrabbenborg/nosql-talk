@@ -9,18 +9,19 @@ import lombok.NoArgsConstructor;
 
 import java.time.Instant;
 
-import static specialisation.demo.influxdb.InfluxDbTypes.MEASURED;
+import static specialisation.demo.influxdb.InfluxDbTypes.OUTDOOR;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Measurement(name = MEASURED)
-public class AnalysisEntity {
+@Measurement(name = OUTDOOR)
+public class TempOutdoorEntity {
     @Column(timestamp = true)
     Instant time;
     @Column(tag = true)
-    String chalet;
+    String address;
     @Column
-    Float analysis;
+    Integer temp;
 }
+

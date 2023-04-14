@@ -9,19 +9,18 @@ import lombok.NoArgsConstructor;
 
 import java.time.Instant;
 
-import static specialisation.demo.influxdb.InfluxDbTypes.PROGNOSED;
+import static specialisation.demo.influxdb.InfluxDbTypes.INDOOR;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Measurement(name = PROGNOSED)
-public class PrognosisEntity {
+@Measurement(name = INDOOR)
+public class TempIndoorEntity {
     @Column(timestamp = true)
     Instant time;
     @Column(tag = true)
-    String chalet;
+    String address;
     @Column
     Integer temp;
 }
-

@@ -1,6 +1,6 @@
 package specialisation.demo.influxdb;
 
-record PrognosisRequest(
+record TempOutdoorRequest(
     Integer temp,
     String chalet
 ) {
