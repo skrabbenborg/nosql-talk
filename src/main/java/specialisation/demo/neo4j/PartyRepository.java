@@ -38,13 +38,13 @@ public class PartyRepository {
         return party;
     }
 
-    public UserInvitedToParty inviteToParty(Long userId, Long partyId) {
+    public PartyInvitedUser inviteToParty(Long userId, Long partyId) {
         User user = userRepository.fetch(userId).orElseThrow(() -> new IllegalArgumentException(("User not found")));
         Party party = fetch(partyId).orElseThrow(() -> new IllegalArgumentException(("Party not found")));
 
-        var relation = UserInvitedToParty.builder()
-            .user(user)
+        var relation = PartyInvitedUser.builder()
             .party(party)
+            .user(user)
             .build();
 
         neo4j.openSession().save(relation);

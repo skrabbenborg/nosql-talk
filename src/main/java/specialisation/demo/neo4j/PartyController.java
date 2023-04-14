@@ -25,7 +25,7 @@ public class PartyController {
     }
 
     @PostMapping("/invite")
-    ResponseEntity<UserInvitedToParty> inviteToParty(@RequestParam Long userId, @RequestParam Long partyId) {
+    ResponseEntity<PartyInvitedUser> inviteToParty(@RequestParam Long userId, @RequestParam Long partyId) {
         return ResponseEntity.ok(repository.inviteToParty(userId, partyId));
     }
 }

@@ -11,15 +11,16 @@ import org.neo4j.ogm.annotation.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @RelationshipEntity(type = "INVITED")
-class UserInvitedToParty {
+class PartyInvitedUser {
 
     @Id
     @GeneratedValue
     Long relationshipId;
 
     @StartNode
-    User user;
+    Party party;
 
     @EndNode
-    Party party;
+    User user;
+
 }
