@@ -43,7 +43,6 @@ public class MongoDbConfig {
             .build();
 
         try {
-            // TODO try-with-resources closes on return statement. Does spring manage our connection?
             return MongoClients.create(settings).getDatabase(properties.database());
         } catch (Exception e) {
             throw new IllegalStateException("Could not start application due to MongoDb startup failure", e);
