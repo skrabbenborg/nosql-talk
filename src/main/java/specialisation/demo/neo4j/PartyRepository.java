@@ -26,13 +26,17 @@ public class PartyRepository {
 
     public Party createParty(Long userId, String description) {
         User user = userRepository.fetch(userId).orElseThrow(() -> new IllegalArgumentException(("User not found")));
-        Party party = createPartyNode(description);
+
+        var party = Party.builder()
+            .value(description)
+            .build();
 
         var relation = UserOrganisesPartyRelation.builder()
             .user(user)
             .party(party)
             .build();
 
+        neo4j.openSession().save(party);
         neo4j.openSession().save(relation);
 
         return party;
@@ -50,15 +54,5 @@ public class PartyRepository {
         neo4j.openSession().save(relation);
 
         return relation;
-    }
-
-    private Party createPartyNode(String description) {
-        var introduction = Party.builder()
-            .value(description)
-            .build();
-
-        neo4j.openSession().save(introduction);
-
-        return introduction;
     }
 }
