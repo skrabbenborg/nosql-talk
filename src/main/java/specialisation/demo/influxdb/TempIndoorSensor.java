@@ -35,6 +35,6 @@ public class TempIndoorSensor {
 
         repository.store(entity);
 
-        log.info("Sensor generated " + entity);
+        log.info("Indoor sensor generated " + entity);
     }
 }

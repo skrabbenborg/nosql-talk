@@ -35,7 +35,7 @@ public class TempOutdoorSensor {
 
         repository.store(entity);
 
-        log.info("Sensor generated " + entity);
+        log.info("Outdoor sensor generated " + entity);
     }
 }
 
