@@ -16,7 +16,7 @@ influxdb:
   token: admin
   bucket: temperature
   organisation: org
-  enabled: false
+  enabled: true
 
 mongodb:
   url: localhost:27017
