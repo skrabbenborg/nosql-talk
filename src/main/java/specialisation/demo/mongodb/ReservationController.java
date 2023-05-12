@@ -5,7 +5,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import specialisation.demo.mongodb.config.MongoDbConfig;
 
-import java.util.List;
+import java.time.Month;
+import java.time.Year;
 import java.util.UUID;
 
 @RestController
@@ -27,34 +28,18 @@ public class ReservationController {
     }
 
     @GetMapping("/{id}")
-    ResponseEntity<List<ReservationEntity>> retrieveReservation(
+    ResponseEntity<ReservationEntity> retrieveReservation(
         @PathVariable UUID id
     ) {
-        return ResponseEntity.ok(repository.fetch(id));
+        return ResponseEntity.ok(repository.fetchReservation(id));
     }
 
-    @PatchMapping("/{id}")
-    ResponseEntity<Void> addGuestToReservation(
-        @PathVariable UUID id,
-        @RequestParam String name,
-        @RequestParam Integer age
+    @GetMapping("/{year}/{month}")
+    ResponseEntity<MonthlyOverviewEntity> retrieveMonthlyOverview(
+        @PathVariable Month month,
+        @PathVariable Year year
     ) {
-        return repository.addGuest(id, name, age) ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();
-    }
-
-    @GetMapping("/projection-by-name")
-    ResponseEntity<List<ReservationEntity>> retrieveProjectionOfGuestsByName(
-        @RequestParam String name
-    ) {
-        return ResponseEntity.ok(repository.fetchByGuestName(name));
-    }
-
-    @DeleteMapping
-    ResponseEntity<Void> deleteReservation(
-        @RequestParam UUID id
-    ) {
-        repository.delete(id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(repository.fetchOverview(month, year));
     }
 }
 

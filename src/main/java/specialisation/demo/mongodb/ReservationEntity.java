@@ -23,6 +23,4 @@ public class ReservationEntity {
     LocalDate date;
     @BsonProperty("name")
     String name;
-    @BsonProperty("guests")
-    List<GuestEntity> guests;
 }

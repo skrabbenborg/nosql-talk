@@ -2,31 +2,45 @@ package specialisation.demo.mongodb;
 
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Accumulators;
+import com.mongodb.client.model.Aggregates;
 import com.mongodb.client.model.Filters;
-import com.mongodb.client.model.Projections;
-import com.mongodb.client.model.Updates;
 import lombok.extern.slf4j.Slf4j;
-import org.bson.conversions.Bson;
+import org.bson.BsonDocument;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.stereotype.Service;
 import specialisation.demo.mongodb.config.MongoDbConfig;
 
-import java.util.*;
-
-import static com.mongodb.client.model.Filters.eq;
-import static java.util.Collections.emptyList;
+import java.time.LocalDate;
+import java.time.Month;
+import java.time.Year;
+import java.util.List;
+import java.util.UUID;
 
 @Slf4j
 @Service
 @ConditionalOnBean(MongoDbConfig.class)
 public class ReservationRepository {
 
-    private static final String COLLECTION = "reservation";
+    private static final String RESERVATION_COLLECTION = "reservations";
+    private static final String OVERVIEW_COLLECTION = "overviews";
 
-    private final MongoCollection<ReservationEntity> collection;
+    private final MongoCollection<ReservationEntity> reservations;
+    private final MongoCollection<MonthlyOverviewEntity> overviews;
 
     public ReservationRepository(MongoDatabase mongodb) {
-        this.collection = mongodb.getCollection(COLLECTION, ReservationEntity.class);
+        this.reservations = mongodb.getCollection(RESERVATION_COLLECTION, ReservationEntity.class);
+        this.overviews = mongodb.getCollection(OVERVIEW_COLLECTION, MonthlyOverviewEntity.class);
+    }
+
+    public ReservationEntity fetchReservation(UUID id) {
+        return reservations.find(Filters.eq("_id", id.toString()))
+            .first();
+    }
+
+    public MonthlyOverviewEntity fetchOverview(Month month, Year year) {
+        return overviews.find(Filters.eq("_id", String.format("%s-%s", year, month)))
+            .first();
     }
 
     public ReservationEntity store(ReservationRequest request) {
@@ -35,52 +49,33 @@ public class ReservationRepository {
             .name(request.name())
             .date(request.date())
             .price(request.price())
-            .guests(emptyList())
             .build();
 
-        collection.insertOne(entity);
-
+        reservations.insertOne(entity);
         log.info("Stored {}", entity);
+
+        var overview = updateMonthlyOverview(entity.date.getMonth(), entity.date.getYear());
+        log.info("Updated {}", overview);
 
         return entity;
     }
 
-    public List<ReservationEntity> fetch(UUID id) {
-        Bson query = Filters.and(
-            Filters.eq("_id", id.toString())
+    private BsonDocument updateMonthlyOverview(Month month, Integer year) {
+        LocalDate start = Year.of(year).atMonth(month).atDay(1);
+        LocalDate end = Year.of(year).atMonth(month).atEndOfMonth();
+
+        var id = String.format("%s-%s", year, month);
+
+        var pipeline = List.of(
+            Aggregates.match(Filters.gte("date", start)),
+            Aggregates.match(Filters.lte("date", end)),
+            Aggregates.group(id,
+                Accumulators.sum("income", "$price"),
+                Accumulators.sum("reservations", 1)
+            ),
+            Aggregates.out(OVERVIEW_COLLECTION)
         );
 
-        var result = new ArrayList<ReservationEntity>();
-        collection.find(query).into(result);
-        return result;
-    }
-
-    public Boolean addGuest(UUID id, String name, Integer age) {
-        GuestEntity guest = GuestEntity.builder()
-            .name(name)
-            .age(age)
-            .build();
-
-        Bson filter = Filters.eq("_id", id.toString());
-        Bson update = Updates.push("guests", guest);
-
-        var result = collection.updateOne(filter, update);
-        return result.getModifiedCount() == 1L;
-    }
-
-    public List<ReservationEntity> fetchByGuestName(String name) {
-        Bson idFilter = Filters.eq("guests.name", name);
-        Bson guestFilter = Filters.elemMatch("guests", Filters.eq("name", name));
-        Bson projection = Projections.include("guests");
-
-        var result = new ArrayList<ReservationEntity>();
-        collection.find(Filters.and(idFilter, guestFilter)).projection(projection).into(result);
-        return result;
-    }
-
-    public void delete(UUID id) {
-        Bson query = Filters.eq("_id", id.toString());
-
-        collection.deleteOne(query);
+        return reservations.aggregate(pipeline, BsonDocument.class).first();
     }
 }
