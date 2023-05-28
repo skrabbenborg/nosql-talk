@@ -1,7 +1,10 @@
 package specialisation.demo.influxdb;
 
 import com.influxdb.client.InfluxDBClient;
+import com.influxdb.client.InfluxQLQueryApi;
 import com.influxdb.client.domain.DeletePredicateRequest;
+import com.influxdb.client.domain.InfluxQLQuery;
+import com.influxdb.client.domain.Query;
 import com.influxdb.client.domain.WritePrecision;
 import com.influxdb.query.dsl.Flux;
 
