@@ -1,7 +1,7 @@
 # Database Specialisation
 
-Welcome to my JCore specialisation. In this repository you can find the progress I've made on the various goals I've
-set.
+Welcome to my JCore specialisation. In this repository you can find the code I've written to become accustomed to the
+different database drivers. Also a presentation is included. Below you will find a brief summary of covered subjects.
 
 ## Database types
 
@@ -9,10 +9,8 @@ set.
 2. Non-relational
     * Document stores
     * Key-value stores
-    * Time series database
     * Graph database
     * Wide-colum stores
-    * Search Engine database
 
 ### Relational databases
 
@@ -39,12 +37,6 @@ This database type models data as key-value pairs. Each key is unique and is ass
 database is especially efficient at retrieving data, but is not capable of handling relationships between key-value
 pairs.
 
-#### Time series databases
-
-This database type models data as time-value pairs. Each value is associated with a timestamp, meaning that this
-database type is optimized for measuring change over time. This database is ideal for storage of events, measurements,
-clicks, trades and the like.
-
 #### Graph databases
 
 This database type models data as graphs. Social media is a great example, as one user can be connected to other users,
@@ -56,14 +48,4 @@ while the structure of the data is not known beforehand.
 This database type models data as rows and columns, however wide-column stores are ideal for storing rows that have
 different values in different columns. For example, it is very efficient at handling empty columns, in contrast to
 relational databases.
-
-#### Search Engine databases
-
-This database type can model data as both structured and unstructured. However, in contrast to other database types,
-this type is specifically tailored for searching through large volumes of stored data, and returning of result ranked by
-relevance. it is specifically useful for full-text search, log analysis and geolocation searches in i.e. google maps.
-
-## Sources
-
-- [Influx-DB purpose](https://www.influxdata.com/products/flux/)
-- [Influx-DB key concepts](https://docs.influxdata.com/influxdb/v1.8/concepts/key_concepts/)
+ly useful for full-text search, log analysis and geolocation searches in i.e. google maps.
